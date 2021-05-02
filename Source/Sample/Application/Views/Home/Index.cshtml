@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IndexViewModel
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Sample</title>
+	</head>
+	<body>
+		<h1>Sample</h1>
+		<p>IDistributedCache: <i>@(Model.DistributedCache != null ? Model.DistributedCache.GetType().FullName : "null")</i></p>
+		@if(Model.DistributedCache != null)
+		{
+			@if(Model.Key != null)
+			{
+				<h2>"@Model.Key"</h2>
+				@if(Model.CacheEntry != null)
+				{
+					<ul>
+						<li>Value: <strong>@Model.CacheEntry.Value</strong></li>
+						<li>Retrieval-time: <strong>@Model.CacheEntry.RetrievalTime</strong></li>
+					</ul>
+					<form asp-action="Remove">
+						<input type="hidden" value="@Model.Key" />
+						<button type="submit">Remove</button>
+					</form>
+				}
+				else
+				{
+					<partial model="@($"The key \"{Model.Key}\" does not exist in the cache.")" name="Parts/Warning" />
+				}
+			}
+			<form asp-action="Index" method="get">
+				<fieldset>
+					<legend>Find cache-entry</legend>
+					<div>
+						<label style="display: block; font-weight: bold;" for="key-input">Key</label>
+						<input id="key-input" name="Key" type="text" value="@Model.Key" />
+					</div>
+					<div style="margin-top: 1em;">
+						<button type="submit">Find</button>
+						<a asp-action="Index">Clear</a>
+					</div>
+				</fieldset>
+			</form>
+			<h2>Add</h2>
+			@if(Model.Exception != null)
+			{
+				<partial model="@(Model.Exception.ToString())" name="Parts/Error" />
+				<a asp-action="Index">Clear</a>
+			}
+			<form asp-action="Add">
+				@{ var form = Context.Request.Method.Equals("post", StringComparison.OrdinalIgnoreCase) ? Context.Request.Form : new FormCollection(null); }
+				<fieldset>
+					<legend>Add cache-entry</legend>
+					<div>
+						<label style="display: block; font-weight: bold;" for="add-key-input">Key</label>
+						<input id="add-key-input" name="Key" type="text" value="@form["Key"]" />
+					</div>
+					<div style="margin-top: 1em;">
+						<label style="display: block; font-weight: bold;" for="add-value-input">Value</label>
+						<input id="add-value-input" name="Value" type="text" value="@form["Value"]" />
+					</div>
+					<div style="margin-top: 1em;">
+						<label style="display: block; font-weight: bold;" for="add-absolute-expiration-input">Absolute expiration in minutes</label>
+						<input id="add-absolute-expiration-input" min="0" name="AbsoluteExpirationInMinutes" type="number" value="@form["AbsoluteExpirationInMinutes"]" />
+					</div>
+					<div style="margin-top: 1em;">
+						<label style="display: block; font-weight: bold;" for="add-sliding-expiration-input">Sliding expiration in minutes</label>
+						<input id="add-sliding-expiration-input" min="0" name="SlidingExpirationInMinutes" type="number" value="@form["SlidingExpirationInMinutes"]" />
+					</div>
+					<div style="margin-top: 1em;">
+						<button type="submit">Add</button>
+					</div>
+				</fieldset>
+			</form>
+		}
+		else
+		{
+			<partial model="@("The IDistributedCache is not set up as a service.")" name="Parts/Warning" />
+		}
+	</body>
+</html>
