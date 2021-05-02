@@ -22,7 +22,7 @@
 						<li>Retrieval-time: <strong>@Model.CacheEntry.RetrievalTime</strong></li>
 					</ul>
 					<form asp-action="Remove">
-						<input type="hidden" value="@Model.Key" />
+						<input name="@nameof(Model.Key)" type="hidden" value="@Model.Key" />
 						<button type="submit">Remove</button>
 					</form>
 				}
@@ -36,7 +36,7 @@
 					<legend>Find cache-entry</legend>
 					<div>
 						<label style="display: block; font-weight: bold;" for="key-input">Key</label>
-						<input id="key-input" name="Key" type="text" value="@Model.Key" />
+						<input id="key-input" name="@nameof(Model.Key)" type="text" value="@Model.Key" />
 					</div>
 					<div style="margin-top: 1em;">
 						<button type="submit">Find</button>
