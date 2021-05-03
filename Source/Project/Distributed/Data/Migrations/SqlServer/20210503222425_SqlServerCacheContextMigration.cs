@@ -20,11 +20,11 @@ namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.SqlServer
 				name: "Cache",
 				columns: table => new
 				{
-					Id = table.Column<string>(type: "nvarchar(449)", maxLength: 449, nullable: false),
-					AbsoluteExpiration = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-					ExpiresAtTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-					SlidingExpirationInSeconds = table.Column<long>(type: "bigint", nullable: true),
-					Value = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+					Id = table.Column<string>(maxLength: 449, nullable: false),
+					AbsoluteExpiration = table.Column<DateTimeOffset>(nullable: true),
+					ExpiresAtTime = table.Column<DateTimeOffset>(nullable: false),
+					SlidingExpirationInSeconds = table.Column<long>(nullable: true),
+					Value = table.Column<byte[]>(nullable: false)
 				},
 				constraints: table =>
 				{
