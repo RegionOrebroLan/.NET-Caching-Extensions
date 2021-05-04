@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using RegionOrebroLan.Caching.Configuration.Extensions;
 using RegionOrebroLan.Caching.Distributed.Configuration;
 using RegionOrebroLan.Caching.Distributed.Configuration.Extensions;
 using RegionOrebroLan.Caching.Distributed.Data;
-using RegionOrebroLan.Extensions;
+using RegionOrebroLan.IO.Extensions;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Extensions
 {
@@ -98,7 +97,7 @@ namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Extensions
 
 				optionsSection.Bind(options);
 
-				options.CachePath = ResolveDataDirectorySubstitution(options.CachePath);
+				options.CachePath = options.CachePath.ResolveDataDirectorySubstitution();
 			});
 		}
 
@@ -153,31 +152,12 @@ namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Extensions
 			if(string.IsNullOrEmpty(connectionStringBuilder.AttachDBFilename))
 				return;
 
-			connectionStringBuilder.AttachDBFilename = ResolveDataDirectorySubstitution(connectionStringBuilder.AttachDBFilename);
+			connectionStringBuilder.AttachDBFilename = connectionStringBuilder.AttachDBFilename.ResolveDataDirectorySubstitution();
 
 			if(string.IsNullOrEmpty(connectionStringBuilder.InitialCatalog))
 				connectionStringBuilder.InitialCatalog = connectionStringBuilder.AttachDBFilename;
 
 			sqlServerCacheOptions.ConnectionString = connectionStringBuilder.ToString();
-		}
-
-		[SuppressMessage("Style", "IDE0057:Use range operator")]
-		public static string ResolveDataDirectorySubstitution(string value)
-		{
-			if(string.IsNullOrWhiteSpace(value))
-				return value;
-
-			if(!value.StartsWith(ConnectionStringSubstitutions.DataDirectory, StringComparison.OrdinalIgnoreCase))
-				return value;
-
-			var dataDirectory = AppDomain.CurrentDomain.GetDataDirectory();
-
-			if(dataDirectory == null)
-				throw new InvalidOperationException("The data-directory is not set for the application-domain.");
-
-			var slashCharacters = new[] {'/', '\\'};
-
-			return dataDirectory.TrimEnd(slashCharacters) + '\\' + value.Substring(ConnectionStringSubstitutions.DataDirectory.Length).TrimStart(slashCharacters);
 		}
 
 		#endregion
