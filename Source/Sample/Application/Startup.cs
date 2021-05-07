@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Internal;
 using RegionOrebroLan.Caching.Distributed.Builder.Extensions;
 using RegionOrebroLan.Caching.Distributed.DependencyInjection.Extensions;
+using RegionOrebroLan.DependencyInjection;
 using RegionOrebroLan.Extensions;
 
 namespace Application
@@ -54,9 +55,10 @@ namespace Application
 
 			AppDomain.CurrentDomain.SetDataDirectory(Path.Combine(this.HostEnvironment.ContentRootPath, "Data"));
 
+			services.AddDistributedCache(this.Configuration, this.HostEnvironment, new InstanceFactory());
+
 			services
 				.AddSingleton<ISystemClock, SystemClock>()
-				.AddDistributedCache(this.Configuration)
 				.AddMvc();
 		}
 

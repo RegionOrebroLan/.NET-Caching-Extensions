@@ -46,3 +46,52 @@ If you want more migration-information you can add the -Verbose parameter:
 	Write-Host "Updating migrations...";
 	Add-Migration SqlServerCacheContextMigrationUpdate -Context SqlServerCacheContext -OutputDir Distributed/Data/Migrations/SqlServer -Project Project;
 	Write-Host "Finnished";
+
+## 3 Notes
+
+The target-frameworks are:
+
+	<TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+
+But integration-testing with net462 - net48 does not work.
+
+	 AddDistributedCache_Sqlite_Test
+	   Source: ServiceCollectionExtensionTest.cs line 47
+	   Duration: 3,2 sec
+
+	  Message: 
+		Test method IntegrationTests.Distributed.DependencyInjection.Extensions.ServiceCollectionExtensionTest.AddDistributedCache_Sqlite_Test threw exception: 
+		System.DllNotFoundException: Det gick inte att läsa in DLL-filen e_sqlite3: Det går inte att hitta den angivna modulen. (Undantag från HRESULT: 0x8007007E)
+	  Stack Trace: 
+		NativeMethods.sqlite3_libversion_number()
+		ISQLite3Provider.sqlite3_libversion_number()
+		raw.SetProvider(ISQLite3Provider imp)
+		Batteries.Init()
+		SqliteCache.cctor()
+		--- Slut på stackspårningen från föregående plats där ett undantag utlöstes ---
+		CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+		CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+		CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+		CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+		CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+		CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+		<>c__DisplayClass1_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+		ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+		ServiceProviderEngine.GetService(Type serviceType)
+		ServiceProvider.GetService(Type serviceType)
+		ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+		ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+		<AddDistributedCache_Test>d__7.MoveNext() line 84
+		--- Slut på stackspårningen från föregående plats där ett undantag utlöstes ---
+		TaskAwaiter.ThrowForNonSuccess(Task task)
+		TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+		TaskAwaiter.GetResult()
+		<AddDistributedCache_Sqlite_Test>d__5.MoveNext() line 49
+		--- Slut på stackspårningen från föregående plats där ett undantag utlöstes ---
+		TaskAwaiter.ThrowForNonSuccess(Task task)
+		TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+		ThreadOperations.ExecuteWithAbortSafety(Action action)
+
+Maybe we should set the target-frameworks to:
+
+	<TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>

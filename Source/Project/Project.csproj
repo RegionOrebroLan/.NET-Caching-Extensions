@@ -10,7 +10,6 @@
 		<AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
 		<Description>.NET caching additions and extensions.</Description>
 		<FileVersion>$(VersionPrefix).0</FileVersion>
-		<LangVersion>9.0</LangVersion>
 		<RootNamespace>$(AssemblyName)</RootNamespace>
 		<TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
 		<Version>$(VersionPrefix)</Version>
@@ -37,6 +36,7 @@
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
 		<PackageReference Include="NeoSmart.Caching.Sqlite" Version="3.1.1" />
 		<PackageReference Include="RegionOrebroLan" Version="1.2.8-alpha" />
+		<PackageReference Include="RegionOrebroLan.Logging" Version="0.0.2-alpha" />
 	</ItemGroup>
 	<Target Name="HandleAssemblyOriginatorKeyFile" BeforeTargets="BeforeBuild" Condition="$(SignAssembly) AND !Exists('$(AssemblyOriginatorKeyFile)')">
 		<PropertyGroup>

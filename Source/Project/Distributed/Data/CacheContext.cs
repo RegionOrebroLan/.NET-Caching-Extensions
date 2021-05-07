@@ -1,13 +1,11 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RegionOrebroLan.Caching.Distributed.Data.Entities;
 
 namespace RegionOrebroLan.Caching.Distributed.Data
 {
 	[CLSCompliant(false)]
-	public abstract class CacheContext : DbContext, ICacheContext
+	public abstract class CacheContext : DbContext
 	{
 		#region Constructors
 
@@ -22,16 +20,6 @@ namespace RegionOrebroLan.Caching.Distributed.Data
 		#endregion
 
 		#region Methods
-
-		public virtual void Migrate()
-		{
-			this.Database.Migrate();
-		}
-
-		public virtual async Task MigrateAsync(CancellationToken cancellationToken = default)
-		{
-			await this.Database.MigrateAsync(cancellationToken);
-		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
