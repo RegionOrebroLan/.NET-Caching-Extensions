@@ -41,6 +41,7 @@ namespace Application
 			applicationBuilder
 				.UseDeveloperExceptionPage()
 				.UseDistributedCache()
+				.UseStaticFiles()
 				.UseRouting()
 				.UseEndpoints(endpoints =>
 				{
@@ -59,7 +60,7 @@ namespace Application
 
 			services
 				.AddSingleton<ISystemClock, SystemClock>()
-				.AddMvc();
+				.AddControllersWithViews();
 		}
 
 		#endregion

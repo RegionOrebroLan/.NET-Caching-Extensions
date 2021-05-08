@@ -1,7 +1,6 @@
-using System;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace Application.Models.Views.Home
+namespace Application.Models.Views.DistributedCache
 {
 	public class IndexViewModel
 	{
@@ -16,10 +15,11 @@ namespace Application.Models.Views.Home
 
 		#region Properties
 
-		public virtual ICacheEntry CacheEntry { get; set; }
+		public virtual Alert Alert { get; set; }
 		public virtual IDistributedCache DistributedCache { get; }
-		public virtual Exception Exception { get; set; }
 		public virtual string Key { get; set; }
+		public virtual Alert SetAlert { get; set; }
+		public virtual SetForm SetForm { get; set; } = new SetForm();
 
 		#endregion
 	}

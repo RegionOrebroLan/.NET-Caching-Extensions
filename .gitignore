@@ -369,5 +369,16 @@ Source/.Global/Signing/*
 Source/Sample/Application/Data/*
 !Source/Sample/Application/Data/ReadMe.md
 
+Source/Sample/Application/Scripts/**/*.js.map
+Source/Sample/Application/Scripts/**/*.js
+Source/Sample/Application/Style/**/*.css
+Source/Sample/Application/wwwroot/Scripts/*
+!Source/Sample/Application/wwwroot/Scripts/.gitkeep
+Source/Sample/Application/wwwroot/Style/*
+!Source/Sample/Application/wwwroot/Style/.gitkeep
+!Source/Sample/Application/wwwroot/favicon.ico
+Source/Sample/Application/package-lock.json
+Source/Sample/Application/yarn.lock
+
 Source/Tests/Integration-tests/Test-data/*
 !Source/Tests/Integration-tests/Test-data/ReadMe.md

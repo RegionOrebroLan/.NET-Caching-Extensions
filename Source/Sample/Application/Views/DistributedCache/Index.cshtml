@@ -1,0 +1,84 @@
+﻿@model IndexViewModel
+@{ ViewBag.Heading = "DistributedCache"; }
+<h1 class="h3">@ViewBag.Heading</h1>
+<div class="card">
+	<div class="card-header" id="type">
+		<h2 class="mb-0">
+			<button aria-controls="type-collapse" aria-expanded="true" class="btn btn-link" data-target="#type-collapse" data-toggle="collapse">
+				Type
+			</button>
+		</h2>
+	</div>
+	<div aria-labelledby="type" class="collapse show" id="type-collapse">
+		<div class="card-body">
+			<p class="alert alert-info mb-0">
+				@(Model.DistributedCache != null ? Model.DistributedCache.GetType().FullName : "The IDistributedCache is not set up as a service.")
+			</p>
+		</div>
+	</div>
+</div>
+@if(Model.DistributedCache != null)
+{
+	<div class="card">
+		<div class="card-header" id="get">
+			<h2 class="mb-0">
+				<button aria-controls="get-collapse" aria-expanded="true" class="btn btn-link" data-target="#get-collapse" data-toggle="collapse">
+					Get
+				</button>
+			</h2>
+		</div>
+		<div aria-labelledby="get" class="collapse show" id="get-collapse">
+			<div class="card-body">
+				<partial model="@Model.Alert" name="~/Views/Shared/Alert.cshtml" />
+				@if(Model.Alert is {Mode: AlertMode.Success })
+				{
+					<form asp-action="Remove" class="mb-2">
+						<input name="@nameof(Model.Key)" type="hidden" value="@Model.Key" />
+						<button type="submit" class="btn btn-outline-danger">Remove</button>
+					</form>
+				}
+				<form asp-action="Index" asp-fragment="get" method="get">
+					<div class="form-group">
+						<label for="get-key">Key</label>
+						<input autofocus="autofocus" class="form-control" id="get-key" maxlength="@SetForm.MaximumLengthForText" name="@nameof(Model.Key)" placeholder="Enter a cache-key." required="required" type="text" value="@Model.Key" />
+					</div>
+					<button type="submit" class="btn btn-primary">Get</button>
+					<a asp-action="Index" class="btn btn-secondary">Clear</a>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-header" id="set">
+			<h2 class="mb-0">
+				<button aria-controls="set-collapse" aria-expanded="true" class="btn btn-link" data-target="#set-collapse" data-toggle="collapse">
+					Set
+				</button>
+			</h2>
+		</div>
+		<div aria-labelledby="set" class="collapse show" id="set-collapse">
+			<div class="card-body">
+				<partial model="@Model.SetAlert" name="~/Views/Shared/Alert.cshtml" />
+				<form asp-action="Set" asp-fragment="set">
+					<div class="form-group">
+						<label for="set-key">Key (required)</label>
+						<input class="form-control" id="set-key" maxlength="@SetForm.MaximumLengthForText" name="@nameof(Model.SetForm.Key)" placeholder="Enter the cache-key." required="required" type="text" value="@Model.SetForm.Key" />
+					</div>
+					<div class="form-group">
+						<label for="set-value">Value (required)</label>
+						<input class="form-control" id="set-value" maxlength="@SetForm.MaximumLengthForText" name="@nameof(Model.SetForm.Value)" placeholder="Enter the cache-value." required="required" type="text" value="@Model.SetForm.Value" />
+					</div>
+					<div class="form-group">
+						<label for="set-absolute-expiration">Absolute expiration in minutes</label>
+						<input class="form-control" id="set-absolute-expiration" min="0" name="@nameof(Model.SetForm.AbsoluteExpirationInMinutes)" type="number" value="@Model.SetForm.AbsoluteExpirationInMinutes" />
+					</div>
+					<div class="form-group">
+						<label for="set-sliding-expiration">Sliding expiration in minutes</label>
+						<input class="form-control" id="set-sliding-expiration" min="0" name="@nameof(Model.SetForm.SlidingExpirationInMinutes)" type="number" value="@Model.SetForm.SlidingExpirationInMinutes" />
+					</div>
+					<button class="btn btn-primary" type="submit">Set</button>
+				</form>
+			</div>
+		</div>
+	</div>
+}
