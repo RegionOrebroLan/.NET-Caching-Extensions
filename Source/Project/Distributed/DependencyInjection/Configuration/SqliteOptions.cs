@@ -2,10 +2,9 @@ using System;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using NeoSmart.Caching.Sqlite;
-using RegionOrebroLan.Caching.Distributed.DependencyInjection;
 using RegionOrebroLan.IO.Extensions;
 
-namespace RegionOrebroLan.Caching.Distributed.Configuration
+namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	[CLSCompliant(false)]
 	public class SqliteOptions : DatabaseOptions

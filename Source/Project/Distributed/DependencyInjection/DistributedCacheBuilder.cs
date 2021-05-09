@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RegionOrebroLan.Caching.Configuration;
-using RegionOrebroLan.Caching.Distributed.Configuration;
+using RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration;
 using RegionOrebroLan.Configuration;
 using RegionOrebroLan.DependencyInjection;
 

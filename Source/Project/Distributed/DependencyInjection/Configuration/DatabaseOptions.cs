@@ -1,6 +1,6 @@
 using System;
 
-namespace RegionOrebroLan.Caching.Distributed.Configuration
+namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	[CLSCompliant(false)]
 	public abstract class DatabaseOptions : DistributedCacheOptions

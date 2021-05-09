@@ -1,7 +1,6 @@
 using System;
-using RegionOrebroLan.Caching.Distributed.DependencyInjection;
 
-namespace RegionOrebroLan.Caching.Distributed.Configuration
+namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	/// <summary>
 	/// Options used when no type is configured.

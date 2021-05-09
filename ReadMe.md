@@ -9,11 +9,19 @@ Additions and extensions for .NET caching.
 ### 1.1 Examples
 
 - [Memory](/Source/Sample/Application/appsettings.Memory.json)
-- [Redis](/Source/Sample/Application/appsettings.Redis.json)
+- [Redis (1)](/Source/Sample/Application/appsettings.Redis-1.json) - you need to setup Redis, see below
+- [Redis (2)](/Source/Sample/Application/appsettings.Redis-2.json) - || -
+- [Redis (3)](/Source/Sample/Application/appsettings.Redis-3.json) - || -
 - [Sqlite (1)](/Source/Sample/Application/appsettings.Sqlite-1.json)
 - [Sqlite (2)](/Source/Sample/Application/appsettings.Sqlite-2.json)
 - [SqlServer (1)](/Source/Sample/Application/appsettings.SqlServer-1.json)
 - [SqlServer (2)](/Source/Sample/Application/appsettings.SqlServer-2.json)
+
+#### 1.1.1 Redis
+
+Setup Redis locally with Docker:
+
+	docker run --rm -it -p 6379:6379 redis
 
 ## 2 Development
 

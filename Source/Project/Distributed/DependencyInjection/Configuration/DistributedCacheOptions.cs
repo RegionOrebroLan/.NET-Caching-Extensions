@@ -2,10 +2,9 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
-using RegionOrebroLan.Caching.Distributed.DependencyInjection;
 using RegionOrebroLan.DependencyInjection.Extensions;
 
-namespace RegionOrebroLan.Caching.Distributed.Configuration
+namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	[CLSCompliant(false)]
 	public abstract class DistributedCacheOptions

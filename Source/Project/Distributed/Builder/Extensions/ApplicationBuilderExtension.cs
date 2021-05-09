@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RegionOrebroLan.Caching.Distributed.Configuration;
+using RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration;
 using RegionOrebroLan.Logging.Extensions;
 
 namespace RegionOrebroLan.Caching.Distributed.Builder.Extensions

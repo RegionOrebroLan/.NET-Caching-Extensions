@@ -1,12 +1,11 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RegionOrebroLan.Caching.Distributed.DependencyInjection;
 
-namespace RegionOrebroLan.Caching.Distributed.Configuration
+namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	[CLSCompliant(false)]
-	public class RedisOptions : DistributedCacheOptions
+	public class MemoryOptions : DistributedCacheOptions
 	{
 		#region Methods
 
@@ -15,7 +14,7 @@ namespace RegionOrebroLan.Caching.Distributed.Configuration
 			if(builder == null)
 				throw new ArgumentNullException(nameof(builder));
 
-			builder.Services.AddDistributedRedisCache(options =>
+			builder.Services.AddDistributedMemoryCache(options =>
 			{
 				this.Options?.Bind(options);
 			});

@@ -7,10 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RegionOrebroLan.Caching.Distributed.Configuration.Extensions;
 using RegionOrebroLan.Caching.Distributed.Data;
-using RegionOrebroLan.Caching.Distributed.DependencyInjection;
 using RegionOrebroLan.IO.Extensions;
 
-namespace RegionOrebroLan.Caching.Distributed.Configuration
+namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	[CLSCompliant(false)]
 	public class SqlServerOptions : DatabaseOptions
