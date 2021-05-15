@@ -6,8 +6,7 @@ using StackExchange.Redis;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
-	[CLSCompliant(false)]
-	public class RedisOptions : DistributedCacheOptions
+	public class RedisOptions : ConnectionStringOptions
 	{
 		#region Methods
 
@@ -19,6 +18,11 @@ namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 			builder.Services.AddDistributedRedisCache(options =>
 			{
 				this.Options?.Bind(options);
+
+				var connectionString = builder.Configuration.GetConnectionString(this.ConnectionStringName);
+
+				if(options.Configuration == null && connectionString != null)
+					options.Configuration = connectionString;
 
 				if(options.Configuration == null && options.ConfigurationOptions == null)
 					options.ConfigurationOptions = new ConfigurationOptions();

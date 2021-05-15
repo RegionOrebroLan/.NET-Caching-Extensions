@@ -4,8 +4,7 @@ using RegionOrebroLan.Caching.Distributed.Data.Entities;
 
 namespace RegionOrebroLan.Caching.Distributed.Data
 {
-	[CLSCompliant(false)]
-	public abstract class CacheContext : DbContext
+	public abstract class CacheContext<TDateTime> : DbContext where TDateTime : struct
 	{
 		#region Constructors
 
@@ -15,7 +14,7 @@ namespace RegionOrebroLan.Caching.Distributed.Data
 
 		#region Properties
 
-		public virtual DbSet<Cache> Cache { get; set; }
+		public virtual DbSet<CacheEntry<TDateTime>> Cache { get; set; }
 
 		#endregion
 
@@ -28,21 +27,14 @@ namespace RegionOrebroLan.Caching.Distributed.Data
 
 			base.OnModelCreating(modelBuilder);
 
-			var builder = modelBuilder.Entity<Cache>();
-
-			builder
-				.HasKey(entity => entity.Id)
-				.IsClustered();
-
-			builder
+			modelBuilder.Entity<CacheEntry<TDateTime>>()
 				.HasIndex(entity => entity.ExpiresAtTime);
 		}
 
 		#endregion
 	}
 
-	[CLSCompliant(false)]
-	public abstract class CacheContext<T> : CacheContext where T : CacheContext
+	public abstract class CacheContext<T, TDateTime> : CacheContext<TDateTime> where T : CacheContext<TDateTime> where TDateTime : struct
 	{
 		#region Constructors
 

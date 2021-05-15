@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Extensions.Caching.SqlServer;
-using RegionOrebroLan.Caching.Distributed.Data.Entities;
+using RegionOrebroLan.Caching.Distributed.Data;
 
 namespace RegionOrebroLan.Caching.Distributed.Configuration.Extensions
 {
@@ -8,14 +8,13 @@ namespace RegionOrebroLan.Caching.Distributed.Configuration.Extensions
 	{
 		#region Methods
 
-		[CLSCompliant(false)]
 		public static void SetDefaults(this SqlServerCacheOptions options)
 		{
 			if(options == null)
 				throw new ArgumentNullException(nameof(options));
 
 			options.SchemaName = "dbo";
-			options.TableName = nameof(Cache);
+			options.TableName = nameof(SqlServerCacheContext.Cache);
 		}
 
 		#endregion

@@ -6,7 +6,6 @@ using RegionOrebroLan.DependencyInjection.Extensions;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
-	[CLSCompliant(false)]
 	public abstract class DistributedCacheOptions
 	{
 		#region Properties

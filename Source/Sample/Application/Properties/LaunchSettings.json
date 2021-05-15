@@ -45,20 +45,20 @@
 			},
 			"launchBrowser": true
 		},
-		"Sqlite-1": {
+		"Redis-4": {
 			"applicationUrl": "http://localhost:5000",
 			"commandName": "Project",
 			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Sqlite-1",
+				"ASPNETCORE_ENVIRONMENT": "Redis-4",
 				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
 			},
 			"launchBrowser": true
 		},
-		"Sqlite-2": {
+		"Sqlite": {
 			"applicationUrl": "http://localhost:5000",
 			"commandName": "Project",
 			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Sqlite-2",
+				"ASPNETCORE_ENVIRONMENT": "Sqlite",
 				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
 			},
 			"launchBrowser": true

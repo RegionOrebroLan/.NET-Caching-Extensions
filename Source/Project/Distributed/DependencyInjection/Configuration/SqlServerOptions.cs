@@ -11,15 +11,8 @@ using RegionOrebroLan.IO.Extensions;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
-	[CLSCompliant(false)]
 	public class SqlServerOptions : DatabaseOptions
 	{
-		#region Properties
-
-		public virtual string MigrationsAssembly { get; set; }
-
-		#endregion
-
 		#region Methods
 
 		protected internal override void AddInternal(IDistributedCacheBuilder builder)
@@ -30,10 +23,9 @@ namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 			var sqlServerCacheOptions = new SqlServerCacheOptions();
 			this.BindSqlServerCacheOptions(builder.Configuration, sqlServerCacheOptions);
 
-			builder.Services.AddDbContext<CacheContext, SqlServerCacheContext>(optionsBuilder =>
+			builder.Services.AddDbContext<SqlServerCacheContext>(optionsBuilder =>
 			{
-				optionsBuilder.UseSqlServer(
-					sqlServerCacheOptions.ConnectionString,
+				optionsBuilder.UseSqlServer(sqlServerCacheOptions.ConnectionString,
 					options =>
 					{
 						if(this.MigrationsAssembly != null)
@@ -86,7 +78,7 @@ namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 
 			using(var scope = builder.ApplicationServices.CreateScope())
 			{
-				scope.ServiceProvider.GetRequiredService<CacheContext>().Database.Migrate();
+				scope.ServiceProvider.GetRequiredService<SqlServerCacheContext>().Database.Migrate();
 			}
 		}
 

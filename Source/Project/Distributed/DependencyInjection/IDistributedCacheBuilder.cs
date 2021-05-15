@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -6,7 +5,6 @@ using RegionOrebroLan.DependencyInjection;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection
 {
-	[CLSCompliant(false)]
 	public interface IDistributedCacheBuilder
 	{
 		#region Properties

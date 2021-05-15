@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>IntegrationTests</RootNamespace>
-		<!--
-			net462 - net48 does not work
-			<TargetFrameworks>net462;net5.0;netcoreapp3.1</TargetFrameworks>
-		-->
 		<TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
 	</PropertyGroup>
 	<ItemGroup>

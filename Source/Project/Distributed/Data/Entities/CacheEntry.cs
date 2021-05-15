@@ -1,17 +1,14 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace RegionOrebroLan.Caching.Distributed.Data.Entities
 {
-	[CLSCompliant(false)]
-	[SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
-	public class Cache
+	public class CacheEntry<TDateTime> where TDateTime : struct
 	{
 		#region Properties
 
-		public virtual DateTimeOffset? AbsoluteExpiration { get; set; }
-		public virtual DateTimeOffset ExpiresAtTime { get; set; }
+		public virtual TDateTime? AbsoluteExpiration { get; set; }
+		public virtual TDateTime ExpiresAtTime { get; set; }
 
 		[MaxLength(449)]
 		public virtual string Id { get; set; }

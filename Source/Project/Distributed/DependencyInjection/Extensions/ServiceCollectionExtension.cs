@@ -7,7 +7,6 @@ using RegionOrebroLan.DependencyInjection;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Extensions
 {
-	[CLSCompliant(false)]
 	public static class ServiceCollectionExtension
 	{
 		#region Methods

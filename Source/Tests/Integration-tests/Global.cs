@@ -6,7 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Logging;
+using TestHelpers.Mocks;
 using TestHelpers.Mocks.Logging;
 
 namespace IntegrationTests
@@ -96,7 +98,17 @@ namespace IntegrationTests
 			services.AddSingleton(configuration);
 			services.AddSingleton(HostEnvironment);
 			services.AddSingleton<ILoggerFactory, LoggerFactoryMock>();
-			services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+			services.AddSingleton<LoggerFactory>();
+			services.AddLogging(loggingBuilder =>
+			{
+				loggingBuilder.AddConfiguration(configuration.GetSection("Logging"));
+				loggingBuilder.AddConsole();
+				loggingBuilder.AddDebug();
+				loggingBuilder.AddEventSourceLogger();
+				loggingBuilder.Configure(options => { options.ActivityTrackingOptions = ActivityTrackingOptions.SpanId | ActivityTrackingOptions.TraceId | ActivityTrackingOptions.ParentId; });
+			});
+			services.AddSingleton<SystemClockMock>();
+			services.AddSingleton<ISystemClock>(serviceProvider => serviceProvider.GetRequiredService<SystemClockMock>());
 
 			return services;
 		}

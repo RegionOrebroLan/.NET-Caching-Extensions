@@ -1,13 +1,14 @@
 using System;
-using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
-using NeoSmart.Caching.Sqlite;
-using RegionOrebroLan.IO.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using RegionOrebroLan.Caching.Distributed.Configuration;
+using RegionOrebroLan.Caching.Distributed.Data;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
-	[CLSCompliant(false)]
-	public class SqliteOptions : DatabaseOptions
+	public class SqliteOptions : FactoryDatabaseOptions<SqliteCacheContext, DateTime>
 	{
 		#region Methods
 
@@ -16,21 +17,24 @@ namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 			if(builder == null)
 				throw new ArgumentNullException(nameof(builder));
 
-			builder.Services.AddSqliteCache(options =>
+			base.AddInternal(builder);
+
+			builder.Services.AddDbContextFactory<SqliteCacheContext>(optionsBuilder =>
 			{
-				if(this.ConnectionStringName != null)
-				{
-					var connectionString = builder.Configuration.GetConnectionString(this.ConnectionStringName);
+				optionsBuilder.UseSqlite(
+					builder.Configuration.GetConnectionString(this.ConnectionStringName),
+					options =>
+					{
+						if(this.MigrationsAssembly != null)
+							options.MigrationsAssembly(this.MigrationsAssembly);
+					});
+			});
 
-					var connectionStringBuilder = new SqliteConnectionStringBuilder(connectionString);
+			builder.Services.AddSingleton<IDistributedCache, SqliteCache>();
 
-					if(!string.IsNullOrEmpty(connectionStringBuilder.DataSource))
-						options.CachePath = connectionStringBuilder.DataSource;
-				}
-
+			builder.Services.Configure<SqliteCacheOptions>(options =>
+			{
 				this.Options?.Bind(options);
-
-				options.CachePath = options.CachePath.ResolveDataDirectorySubstitution();
 			});
 		}
 

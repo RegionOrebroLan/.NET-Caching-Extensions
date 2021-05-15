@@ -12,7 +12,6 @@ namespace RegionOrebroLan.Caching.Distributed.Builder.Extensions
 	{
 		#region Methods
 
-		[CLSCompliant(false)]
 		public static IApplicationBuilder UseDistributedCache(this IApplicationBuilder applicationBuilder)
 		{
 			try

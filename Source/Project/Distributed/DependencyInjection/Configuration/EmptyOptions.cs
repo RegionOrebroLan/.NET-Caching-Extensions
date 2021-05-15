@@ -1,11 +1,8 @@
-using System;
-
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
 	/// <summary>
 	/// Options used when no type is configured.
 	/// </summary>
-	[CLSCompliant(false)]
 	public class EmptyOptions : DistributedCacheOptions
 	{
 		#region Properties

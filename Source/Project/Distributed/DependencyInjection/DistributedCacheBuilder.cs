@@ -9,7 +9,6 @@ using RegionOrebroLan.DependencyInjection;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection
 {
-	[CLSCompliant(false)]
 	public class DistributedCacheBuilder : IDistributedCacheBuilder
 	{
 		#region Constructors

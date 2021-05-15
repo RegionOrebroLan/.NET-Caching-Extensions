@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
-	[CLSCompliant(false)]
 	public class MemoryOptions : DistributedCacheOptions
 	{
 		#region Methods

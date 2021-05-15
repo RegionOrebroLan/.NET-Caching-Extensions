@@ -1,10 +1,8 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace RegionOrebroLan.Caching.Distributed.Data
 {
-	[CLSCompliant(false)]
 	public class SqlServerCacheContextFactory : IDesignTimeDbContextFactory<SqlServerCacheContext>
 	{
 		#region Methods

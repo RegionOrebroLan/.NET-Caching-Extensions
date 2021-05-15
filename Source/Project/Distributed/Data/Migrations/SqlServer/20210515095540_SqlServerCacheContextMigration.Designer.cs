@@ -10,22 +10,22 @@ using RegionOrebroLan.Caching.Distributed.Data;
 namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerCacheContext))]
-    [Migration("20210503222425_SqlServerCacheContextMigration")]
+    [Migration("20210515095540_SqlServerCacheContextMigration")]
     partial class SqlServerCacheContextMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RegionOrebroLan.Caching.Distributed.Data.Entities.Cache", b =>
+            modelBuilder.Entity("RegionOrebroLan.Caching.Distributed.Data.Entities.CacheEntry<System.DateTimeOffset>", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(449)")
-                        .HasMaxLength(449);
+                        .HasMaxLength(449)
+                        .HasColumnType("nvarchar(449)");
 
                     b.Property<DateTimeOffset?>("AbsoluteExpiration")
                         .HasColumnType("datetimeoffset");
@@ -41,7 +41,7 @@ namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.SqlServer
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id")
-                        .HasAnnotation("SqlServer:Clustered", true);
+                        .IsClustered();
 
                     b.HasIndex("ExpiresAtTime");
 

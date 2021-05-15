@@ -1,13 +1,10 @@
-using System;
-
 namespace RegionOrebroLan.Caching.Distributed.DependencyInjection.Configuration
 {
-	[CLSCompliant(false)]
-	public abstract class DatabaseOptions : DistributedCacheOptions
+	public abstract class DatabaseOptions : ConnectionStringOptions
 	{
 		#region Properties
 
-		public virtual string ConnectionStringName { get; set; }
+		public virtual string MigrationsAssembly { get; set; }
 
 		#endregion
 	}

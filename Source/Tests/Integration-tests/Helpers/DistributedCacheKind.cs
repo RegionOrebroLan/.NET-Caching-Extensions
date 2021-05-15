@@ -6,8 +6,8 @@ namespace IntegrationTests.Helpers
 		Redis1,
 		Redis2,
 		Redis3,
-		Sqlite1,
-		Sqlite2,
+		Redis4,
+		Sqlite,
 		SqlServer1,
 		SqlServer2
 	}

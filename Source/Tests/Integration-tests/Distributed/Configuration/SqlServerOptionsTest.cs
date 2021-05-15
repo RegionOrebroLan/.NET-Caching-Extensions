@@ -38,8 +38,7 @@ namespace IntegrationTests.Distributed.Configuration
 			var configuration = configurationBuilder.Build();
 			var services = Global.CreateServices(configuration);
 			services.AddDistributedCache(configuration, Global.HostEnvironment, new InstanceFactory());
-			// ReSharper disable UseAwaitUsing
-			using(var serviceProvider = services.BuildServiceProvider())
+			await using(var serviceProvider = services.BuildServiceProvider())
 			{
 				var sqlServerOptions = (SqlServerOptions)serviceProvider.GetRequiredService<DistributedCacheOptions>();
 				var sqlServerCacheOptions = new SqlServerCacheOptions();
@@ -48,7 +47,6 @@ namespace IntegrationTests.Distributed.Configuration
 				Assert.AreEqual("dbo", sqlServerCacheOptions.SchemaName);
 				Assert.AreEqual("Cache", sqlServerCacheOptions.TableName);
 			}
-			// ReSharper restore UseAwaitUsing
 		}
 
 		[TestCleanup]
@@ -56,22 +54,20 @@ namespace IntegrationTests.Distributed.Configuration
 		{
 			await Task.CompletedTask;
 
-			var configuration = Global.CreateConfiguration("appsettings.json", $"appsettings.SqlServer1.json");
+			var configuration = Global.CreateConfiguration("appsettings.json", "appsettings.SqlServer1.json");
 			var services = Global.CreateServices(configuration);
 			services.AddDistributedCache(configuration, Global.HostEnvironment, new InstanceFactory());
 
-			// ReSharper disable UseAwaitUsing
-			using(var serviceProvider = services.BuildServiceProvider())
+			await using(var serviceProvider = services.BuildServiceProvider())
 			{
 				using(var scope = serviceProvider.CreateScope())
 				{
-					var cacheContext = scope.ServiceProvider.GetService<CacheContext>();
+					var cacheContext = scope.ServiceProvider.GetService<SqlServerCacheContext>();
 
 					if(cacheContext != null)
 						await cacheContext.Database.EnsureDeletedAsync();
 				}
 			}
-			// ReSharper restore UseAwaitUsing
 
 			AppDomain.CurrentDomain.SetDataDirectory(null);
 		}
@@ -95,8 +91,7 @@ namespace IntegrationTests.Distributed.Configuration
 			var configuration = configurationBuilder.Build();
 			var services = Global.CreateServices(configuration);
 			services.AddDistributedCache(configuration, Global.HostEnvironment, new InstanceFactory());
-			// ReSharper disable All
-			using(var serviceProvider = services.BuildServiceProvider())
+			await using(var serviceProvider = services.BuildServiceProvider())
 			{
 				var sqlServerOptions = (SqlServerOptions)serviceProvider.GetRequiredService<DistributedCacheOptions>();
 				sqlServerOptions.UseInternal(new ApplicationBuilder(serviceProvider));
@@ -107,7 +102,6 @@ namespace IntegrationTests.Distributed.Configuration
 				var actualValue = await distributedCache.GetStringAsync(key);
 				Assert.AreEqual(value, actualValue);
 			}
-			// ReSharper restore All
 		}
 
 		[TestMethod]
@@ -123,8 +117,7 @@ namespace IntegrationTests.Distributed.Configuration
 			var configuration = configurationBuilder.Build();
 			var services = Global.CreateServices(configuration);
 			services.AddDistributedCache(configuration, Global.HostEnvironment, new InstanceFactory());
-			// ReSharper disable All
-			using(var serviceProvider = services.BuildServiceProvider())
+			await using(var serviceProvider = services.BuildServiceProvider())
 			{
 				var sqlServerOptions = (SqlServerOptions)serviceProvider.GetRequiredService<DistributedCacheOptions>();
 				sqlServerOptions.UseInternal(new ApplicationBuilder(serviceProvider));
@@ -133,7 +126,7 @@ namespace IntegrationTests.Distributed.Configuration
 				const string value = "Value";
 				try
 				{
-					distributedCache.SetString(key, value);
+					await distributedCache.SetStringAsync(key, value);
 				}
 				catch(SqlException sqlException)
 				{
@@ -141,7 +134,6 @@ namespace IntegrationTests.Distributed.Configuration
 						throw;
 				}
 			}
-			// ReSharper restore All
 		}
 
 		[TestMethod]
@@ -157,13 +149,11 @@ namespace IntegrationTests.Distributed.Configuration
 			var configuration = configurationBuilder.Build();
 			var services = Global.CreateServices(configuration);
 			services.AddDistributedCache(configuration, Global.HostEnvironment, new InstanceFactory());
-			// ReSharper disable UseAwaitUsing
-			using(var serviceProvider = services.BuildServiceProvider())
+			await using(var serviceProvider = services.BuildServiceProvider())
 			{
 				var sqlServerOptions = (SqlServerOptions)serviceProvider.GetRequiredService<DistributedCacheOptions>();
 				sqlServerOptions.UseInternal(new ApplicationBuilder(serviceProvider));
 			}
-			// ReSharper restore UseAwaitUsing
 		}
 
 		[TestMethod]
@@ -179,13 +169,11 @@ namespace IntegrationTests.Distributed.Configuration
 			var configuration = configurationBuilder.Build();
 			var services = Global.CreateServices(configuration);
 			services.AddDistributedCache(configuration, Global.HostEnvironment, new InstanceFactory());
-			// ReSharper disable UseAwaitUsing
-			using(var serviceProvider = services.BuildServiceProvider())
+			await using(var serviceProvider = services.BuildServiceProvider())
 			{
 				var sqlServerOptions = (SqlServerOptions)serviceProvider.GetRequiredService<DistributedCacheOptions>();
 				sqlServerOptions.UseInternal(new ApplicationBuilder(serviceProvider));
 			}
-			// ReSharper restore UseAwaitUsing
 		}
 
 		#endregion
