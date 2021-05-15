@@ -8,7 +8,7 @@ Additions and extensions for .NET caching.
 
 ### 1.1 Configurable distributed cache
 
-- Configuring data-protection through AppSettings.json
+- Configuring caching through AppSettings.json
 
 #### 1.1.1 Examples
 
