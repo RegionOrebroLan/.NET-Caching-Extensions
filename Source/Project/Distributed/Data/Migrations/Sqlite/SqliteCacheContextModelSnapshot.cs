@@ -14,7 +14,7 @@ namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.Sqlite
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.5");
+                .HasAnnotation("ProductVersion", "5.0.6");
 
             modelBuilder.Entity("RegionOrebroLan.Caching.Distributed.Data.Entities.CacheEntry<System.DateTime>", b =>
                 {

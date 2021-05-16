@@ -9,14 +9,14 @@ using RegionOrebroLan.Caching.Distributed.Data;
 namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteCacheContext))]
-    [Migration("20210515095532_SqliteCacheContextMigration")]
+    [Migration("20210516074906_SqliteCacheContextMigration")]
     partial class SqliteCacheContextMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.5");
+                .HasAnnotation("ProductVersion", "5.0.6");
 
             modelBuilder.Entity("RegionOrebroLan.Caching.Distributed.Data.Entities.CacheEntry<System.DateTime>", b =>
                 {

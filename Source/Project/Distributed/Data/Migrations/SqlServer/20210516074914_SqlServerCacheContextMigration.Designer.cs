@@ -10,7 +10,7 @@ using RegionOrebroLan.Caching.Distributed.Data;
 namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerCacheContext))]
-    [Migration("20210515095540_SqlServerCacheContextMigration")]
+    [Migration("20210516074914_SqlServerCacheContextMigration")]
     partial class SqlServerCacheContextMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace RegionOrebroLan.Caching.Distributed.Data.Migrations.SqlServer
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("RegionOrebroLan.Caching.Distributed.Data.Entities.CacheEntry<System.DateTimeOffset>", b =>
