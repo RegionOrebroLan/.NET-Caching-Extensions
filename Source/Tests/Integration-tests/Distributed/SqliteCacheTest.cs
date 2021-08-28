@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using IntegrationTests.Helpers.Extensions;
@@ -322,6 +323,42 @@ namespace IntegrationTests.Distributed
 		}
 
 		[TestMethod]
+		public async Task Set_ShouldUpdateExistingCacheEntry()
+		{
+			// ReSharper disable MethodHasAsyncOverload
+
+			const string key = "Key";
+
+			var expectedValue = string.Empty;
+			var expectedBytes = Encoding.UTF8.GetBytes(expectedValue);
+
+			await using(var serviceProvider = await this.CreateServiceProviderAsync())
+			{
+				var sqliteCache = (SqliteCache)serviceProvider.GetRequiredService<IDistributedCache>();
+				sqliteCache.Set(key, expectedBytes);
+				var actualValue = sqliteCache.GetString(key);
+				Assert.AreEqual(expectedValue, actualValue);
+				var actualBytes = sqliteCache.Get(key);
+				Assert.IsTrue(expectedBytes.SequenceEqual(actualBytes));
+			}
+
+			expectedValue = "Test";
+			expectedBytes = Encoding.UTF8.GetBytes(expectedValue);
+
+			await using(var serviceProvider = await this.CreateServiceProviderAsync())
+			{
+				var sqliteCache = (SqliteCache)serviceProvider.GetRequiredService<IDistributedCache>();
+				sqliteCache.Set(key, expectedBytes);
+				var actualValue = sqliteCache.GetString(key);
+				Assert.AreEqual(expectedValue, actualValue);
+				var actualBytes = sqliteCache.Get(key);
+				Assert.IsTrue(expectedBytes.SequenceEqual(actualBytes));
+			}
+
+			// ReSharper restore MethodHasAsyncOverload
+		}
+
+		[TestMethod]
 		public async Task Set_Test()
 		{
 			const string key = "Key";
@@ -346,6 +383,38 @@ namespace IntegrationTests.Distributed
 					Assert.AreEqual(Convert.ToInt64(TimeSpan.FromMinutes(20).TotalSeconds), cacheEntry.SlidingExpirationInSeconds);
 					Assert.IsTrue(Array.Empty<byte>().SequenceEqual(cacheEntry.Value));
 				}
+			}
+		}
+
+		[TestMethod]
+		public async Task SetAsync_ShouldUpdateExistingCacheEntry()
+		{
+			const string key = "Key";
+
+			var expectedValue = string.Empty;
+			var expectedBytes = Encoding.UTF8.GetBytes(expectedValue);
+
+			await using(var serviceProvider = await this.CreateServiceProviderAsync())
+			{
+				var sqliteCache = (SqliteCache)serviceProvider.GetRequiredService<IDistributedCache>();
+				await sqliteCache.SetAsync(key, expectedBytes);
+				var actualValue = await sqliteCache.GetStringAsync(key);
+				Assert.AreEqual(expectedValue, actualValue);
+				var actualBytes = await sqliteCache.GetAsync(key);
+				Assert.IsTrue(expectedBytes.SequenceEqual(actualBytes));
+			}
+
+			expectedValue = "Test";
+			expectedBytes = Encoding.UTF8.GetBytes(expectedValue);
+
+			await using(var serviceProvider = await this.CreateServiceProviderAsync())
+			{
+				var sqliteCache = (SqliteCache)serviceProvider.GetRequiredService<IDistributedCache>();
+				await sqliteCache.SetAsync(key, expectedBytes);
+				var actualValue = await sqliteCache.GetStringAsync(key);
+				Assert.AreEqual(expectedValue, actualValue);
+				var actualBytes = await sqliteCache.GetAsync(key);
+				Assert.IsTrue(expectedBytes.SequenceEqual(actualBytes));
 			}
 		}
 

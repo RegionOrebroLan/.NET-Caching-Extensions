@@ -276,7 +276,9 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				var cacheEntry = cacheContext.Cache.Find(key) ?? cacheContext.Cache.Add(new CacheEntry<TDateTime> { Id = key, Value = value }).Entity;
+				var cacheEntry = cacheContext.Cache.Find(key) ?? cacheContext.Cache.Add(new CacheEntry<TDateTime> { Id = key }).Entity;
+
+				cacheEntry.Value = value;
 
 				this.SetCacheEntryExpiration(cacheEntry, options);
 
@@ -301,7 +303,9 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false) ?? (await cacheContext.Cache.AddAsync(new CacheEntry<TDateTime> { Id = key, Value = value }, token).ConfigureAwait(false)).Entity;
+				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false) ?? (await cacheContext.Cache.AddAsync(new CacheEntry<TDateTime> { Id = key }, token).ConfigureAwait(false)).Entity;
+
+				cacheEntry.Value = value;
 
 				await this.SetCacheEntryExpirationAsync(cacheEntry, options, token).ConfigureAwait(false);
 
