@@ -114,7 +114,7 @@ namespace IntegrationTests.Distributed
 
 				var now = await DateTimeOffsetHelper.CreateDateTimeOffsetAsync(2000);
 				serviceProvider.SetTime(now);
-				sqliteCache.Set(key, Array.Empty<byte>(), new DistributedCacheEntryOptions {SlidingExpiration = TimeSpan.FromSeconds(1)});
+				sqliteCache.Set(key, Array.Empty<byte>(), new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromSeconds(1) });
 				serviceProvider.SetTime(now.AddSeconds(2));
 				value = sqliteCache.Get(key);
 				Assert.IsNull(value);
@@ -140,7 +140,7 @@ namespace IntegrationTests.Distributed
 
 				var now = await DateTimeOffsetHelper.CreateDateTimeOffsetAsync(2000);
 				serviceProvider.SetTime(now);
-				await sqliteCache.SetAsync(key, Array.Empty<byte>(), new DistributedCacheEntryOptions {SlidingExpiration = TimeSpan.FromSeconds(1)});
+				await sqliteCache.SetAsync(key, Array.Empty<byte>(), new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromSeconds(1) });
 				serviceProvider.SetTime(now.AddSeconds(2));
 				value = await sqliteCache.GetAsync(key);
 				Assert.IsNull(value);
@@ -160,7 +160,7 @@ namespace IntegrationTests.Distributed
 
 				// ReSharper disable All
 
-				sqliteCache.Set(key, Array.Empty<byte>(), new DistributedCacheEntryOptions {SlidingExpiration = TimeSpan.FromSeconds(1)});
+				sqliteCache.Set(key, Array.Empty<byte>(), new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromSeconds(1) });
 				using(var sqliteCacheContext = serviceProvider.GetRequiredService<IDbContextFactory<SqliteCacheContext>>().CreateDbContext())
 				{
 					var cacheEntry = sqliteCacheContext.Cache.Find(key);
@@ -190,7 +190,7 @@ namespace IntegrationTests.Distributed
 				serviceProvider.SetTime(now);
 				var sqliteCache = (SqliteCache)serviceProvider.GetRequiredService<IDistributedCache>();
 
-				await sqliteCache.SetAsync(key, Array.Empty<byte>(), new DistributedCacheEntryOptions {SlidingExpiration = TimeSpan.FromSeconds(1)});
+				await sqliteCache.SetAsync(key, Array.Empty<byte>(), new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromSeconds(1) });
 				await using(var sqliteCacheContext = serviceProvider.GetRequiredService<IDbContextFactory<SqliteCacheContext>>().CreateDbContext())
 				{
 					var cacheEntry = await sqliteCacheContext.Cache.FindAsync(key);

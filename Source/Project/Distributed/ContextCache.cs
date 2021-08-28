@@ -98,7 +98,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] {key}, token).ConfigureAwait(false);
+				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false);
 
 				if(!this.CacheEntryHasExpired(cacheEntry))
 				{
@@ -197,7 +197,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] {key}, token).ConfigureAwait(false);
+				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false);
 
 				if(cacheEntry != null)
 					await this.RefreshCacheEntryAsync(cacheContext, cacheEntry, token).ConfigureAwait(false);
@@ -232,7 +232,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				cacheContext.Cache.Remove(await cacheContext.Cache.FindAsync(new object[] {key}, token).ConfigureAwait(false));
+				cacheContext.Cache.Remove(await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false));
 				await cacheContext.SaveChangesAsync(token).ConfigureAwait(false);
 			}
 
@@ -276,7 +276,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				var cacheEntry = cacheContext.Cache.Find(key) ?? cacheContext.Cache.Add(new CacheEntry<TDateTime> {Id = key, Value = value}).Entity;
+				var cacheEntry = cacheContext.Cache.Find(key) ?? cacheContext.Cache.Add(new CacheEntry<TDateTime> { Id = key, Value = value }).Entity;
 
 				this.SetCacheEntryExpiration(cacheEntry, options);
 
@@ -301,7 +301,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
-				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] {key}, token).ConfigureAwait(false) ?? (await cacheContext.Cache.AddAsync(new CacheEntry<TDateTime> {Id = key, Value = value}, token).ConfigureAwait(false)).Entity;
+				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false) ?? (await cacheContext.Cache.AddAsync(new CacheEntry<TDateTime> { Id = key, Value = value }, token).ConfigureAwait(false)).Entity;
 
 				await this.SetCacheEntryExpirationAsync(cacheEntry, options, token).ConfigureAwait(false);
 
