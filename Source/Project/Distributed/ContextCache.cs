@@ -15,6 +15,7 @@ using RegionOrebroLan.Logging.Extensions;
 
 namespace RegionOrebroLan.Caching.Distributed
 {
+	// ReSharper disable UseAwaitUsing
 	public abstract class ContextCache<TDatabaseContext, TDateTime, TOptions> where TDatabaseContext : CacheContext<TDatabaseContext, TDateTime> where TDateTime : struct where TOptions : DatabaseContextCacheOptions
 	{
 		#region Constructors
@@ -96,7 +97,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			byte[] value = null;
 
-			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
+			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
 				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false);
 
@@ -195,7 +196,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			token.ThrowIfCancellationRequested();
 
-			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
+			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
 				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false);
 
@@ -230,7 +231,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			token.ThrowIfCancellationRequested();
 
-			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
+			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
 				cacheContext.Cache.Remove(await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false));
 				await cacheContext.SaveChangesAsync(token).ConfigureAwait(false);
@@ -253,7 +254,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 		public virtual async Task<int> RemoveExpiredCacheEntriesAsync()
 		{
-			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
+			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
 				cacheContext.Cache.RemoveRange(this.GetExpiredCacheEntries(cacheContext));
 				var removed = await cacheContext.SaveChangesAsync().ConfigureAwait(false);
@@ -301,7 +302,7 @@ namespace RegionOrebroLan.Caching.Distributed
 
 			token.ThrowIfCancellationRequested();
 
-			await using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
+			using(var cacheContext = this.DatabaseContextFactory.CreateDbContext())
 			{
 				var cacheEntry = await cacheContext.Cache.FindAsync(new object[] { key }, token).ConfigureAwait(false) ?? (await cacheContext.Cache.AddAsync(new CacheEntry<TDateTime> { Id = key }, token).ConfigureAwait(false)).Entity;
 
@@ -320,4 +321,5 @@ namespace RegionOrebroLan.Caching.Distributed
 
 		#endregion
 	}
+	// ReSharper restore UseAwaitUsing
 }
