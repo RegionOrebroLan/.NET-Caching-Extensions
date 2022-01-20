@@ -65,7 +65,12 @@ namespace IntegrationTests.Distributed.DependencyInjection.Extensions
 		[TestMethod]
 		public async Task AddDistributedCache_Sqlite_Test()
 		{
-			await this.AddDistributedCacheTest(DistributedCacheKind.Sqlite, 7);
+#if NET6_0_OR_GREATER
+			const int expectedNumberOfServices = 8;
+#else
+			const int expectedNumberOfServices = 7;
+#endif
+			await this.AddDistributedCacheTest(DistributedCacheKind.Sqlite, expectedNumberOfServices);
 		}
 
 		[TestMethod]
@@ -141,7 +146,7 @@ namespace IntegrationTests.Distributed.DependencyInjection.Extensions
 		[TestCleanup]
 		public async Task TestCleanup()
 		{
-			foreach(var distributedCacheKind in new[] {DistributedCacheKind.Sqlite, DistributedCacheKind.SqlServer1})
+			foreach(var distributedCacheKind in new[] { DistributedCacheKind.Sqlite, DistributedCacheKind.SqlServer1 })
 			{
 				var configuration = Global.CreateConfiguration("appsettings.json", $"appsettings.{distributedCacheKind}.json");
 				var services = Global.CreateServices(configuration);
