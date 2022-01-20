@@ -67,7 +67,7 @@ namespace IntegrationTests
 			var configurationBuilder = new ConfigurationBuilder();
 			configurationBuilder.Properties.Add("FileProvider", HostEnvironment.ContentRootFileProvider);
 
-			foreach(var path in jsonFilePaths)
+			foreach(var path in jsonFilePaths ?? Array.Empty<string>())
 			{
 				configurationBuilder.AddJsonFile(path, optional, true);
 			}
