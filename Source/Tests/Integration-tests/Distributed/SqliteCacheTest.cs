@@ -316,7 +316,7 @@ namespace IntegrationTests.Distributed
 
 				await using(var sqliteCacheContext = serviceProvider.GetRequiredService<IDbContextFactory<SqliteCacheContext>>().CreateDbContext())
 				{
-					Assert.AreEqual(5, await sqliteCacheContext.Cache.CountAsync());
+					Assert.AreEqual(5, await sqliteCacheContext.Cache.CountAsync(), "If there is an error here running all the tests, try to run all the tests in this class. Then there is no error. Happens with netcoreapp3.1.");
 					Assert.AreEqual(5, await sqliteCacheContext.Cache.CountAsync(cacheEntry => cacheEntry.ExpiresAtTime > now.UtcDateTime));
 				}
 			}
